@@ -15,7 +15,7 @@ module Lock
       }
       @rewriter = Lock::Gemfile::Rewriter.new
       @rewriter.lockfile = @lockfile
-      @parser = Parser::CurrentRuby.new
+      @parser = Parser::Ruby31.new
     end
 
     def test_on_send_adds_version_specifier_when_missing

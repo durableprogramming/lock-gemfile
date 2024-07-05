@@ -26,7 +26,7 @@
 # Dependencies:
 #   - parser - bundler - thor
 
-require "parser/current"
+require "parser/ruby31"
 require "bundler"
 require "thor"
 
@@ -73,7 +73,7 @@ class GemfileUpdater < Thor
     buffer.source = gemfile_content
 
     # Create a new Ruby parser
-    parser = Parser::CurrentRuby.new
+    parser = Parser::Ruby31.new
     # Parse the Gemfile content into an Abstract Syntax Tree (AST)
     ast = parser.parse(buffer)
 

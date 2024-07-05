@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "parser/current"
+require "parser/ruby31"
 
 module Lock
   module Gemfile
@@ -22,7 +22,7 @@ module Lock
     #
     # Example usage:
     #
-    #   parser = Parser::CurrentRuby.new ast = parser.parse(buffer)
+    #   parser = Parser::Ruby31.new ast = parser.parse(buffer)
     #
     #   rewriter = Lock::Gemfile::Rewriter.new rewriter.lockfile = {
     #     "rails" => "6.1.0", "puma" => "5.0.4"
