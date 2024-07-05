@@ -1,0 +1,98 @@
+#!/bin/env ruby
+# frozen_string_literal: true
+#
+# lock-gemfile
+#
+# This script updates a Gemfile with locked versions from the
+# corresponding Gemfile.lock file.  It uses the Parser gem to parse the
+# Gemfile into an Abstract Syntax Tree (AST), and then uses a custom
+# TreeRewriter to modify the AST, inserting the locked versions from
+# the lockfile.  The modified AST is then transformed back into source
+# code and either printed to the console or written back to the Gemfile,
+# depending on the provided options.
+#
+# Usage:
+#   gemfile_updater.rb update GEMFILE [options]
+#
+# Options:
+#   -w, [--write], [--no-write]        # Write the updated Gemfile back
+#   to disk (default: false) -p, [--pessimistic], [--no-pessimistic]  #
+#   Use pessimistic version constraints (~>) (default: true)
+#
+# Examples:
+#   gemfile_updater.rb update Gemfile gemfile_updater.rb update Gemfile
+#   --write gemfile_updater.rb update Gemfile --no-pessimistic
+#
+# Dependencies:
+#   - parser - bundler - thor
+
+require "parser/current"
+require "bundler"
+require "thor"
+
+require_relative "../lib/lock/gemfile/rewriter"
+
+class GemfileUpdater < Thor
+  #
+  # This class update a Gemfile with locked versions - designed to pull
+  # from the corresponding Gemfile.lock file, it can also accept an
+  # arbitrary hash of versions..  It uses the Parser gem to parse the
+  # Gemfile into an Abstract Syntax Tree (AST), and then uses a custom
+  # TreeRewriter to modify the AST, inserting the locked versions from
+  # the lockfile.  The modified AST is then transformed back into source
+  # code and either printed to the console or written back to the Gemfile,
+  # depending on the provided options.
+  #
+  desc "update GEMFILE", "Update Gemfile with locked versions"
+
+  option :write, type: :boolean, default: false, aliases: "-w"
+  option :pessimistic, type: :boolean, default: true, aliases: "-p"
+
+  def update(gemfile)
+    # Read the content of the specified Gemfile
+    gemfile_content = File.read(gemfile)
+
+    # Parse the corresponding Gemfile.lock using Bundler's LockfileParser
+    lockfile = Bundler::LockfileParser.new(Bundler.read_file(gemfile + ".lock"))
+
+    # Create a hash to store the desired versions of each gem
+    desired_versions = {}
+
+    # Iterate over each gem specification in the lockfile
+    lockfile.specs.each do |spec|
+      # Store the gem name and its locked version in the desired_versions hash
+      desired_versions[spec.name] = spec.version
+    end
+
+    # Create a buffer to hold the Gemfile content
+    buffer = Parser::Source::Buffer.new("(gemfile)")
+    buffer.source = gemfile_content
+
+    # Create a new Ruby parser
+    parser = Parser::CurrentRuby.new
+    # Parse the Gemfile content into an Abstract Syntax Tree (AST)
+    ast = parser.parse(buffer)
+
+    # Create a new instance of the Lock::Gemfile::Rewriter
+    rewriter = Lock::Gemfile::Rewriter.new
+    # Set the desired versions from the lockfile
+    rewriter.lockfile = desired_versions
+    # Set the pessimistic option based on the command-line argument
+    rewriter.pessimistic = options[:pessimistic]
+
+    # Rewrite the Gemfile AST with the locked versions
+    transformed_code = rewriter.rewrite(buffer, ast)
+
+    # Print the transformed Gemfile content
+    puts transformed_code
+
+    # If the write option is not specified, exit the method
+    return unless options[:write]
+
+    # Write the transformed Gemfile content back to the original file
+    File.write(gemfile, transformed_code)
+  end
+end
+
+# Start the GemfileUpdater CLI with the provided command-line arguments
+GemfileUpdater.start(ARGV)
