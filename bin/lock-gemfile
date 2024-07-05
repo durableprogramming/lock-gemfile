@@ -32,6 +32,10 @@ require "thor"
 
 require_relative "../lib/lock/gemfile/rewriter"
 
+# Squelch irrelevant deprecation warnings.
+
+$VERBOSE = nil
+
 class GemfileUpdater < Thor
   #
   # This class update a Gemfile with locked versions - designed to pull
