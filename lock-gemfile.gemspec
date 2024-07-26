@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
 
   spec.summary = "A tool to update Gemfile with locked versions"
   spec.description = "This gem provides a command-line tool to update a Gemfile with locked versions from the corresponding Gemfile.lock file."
-  spec.homepage = "https://github.com/durableprogramming/lock-gemfile"
+  spec.homepage = "https://durableprogramming.com/library/lock-gemfile/"
   spec.license = "MIT"
   spec.required_ruby_version = ">= 3.0.0"
 
