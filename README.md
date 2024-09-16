@@ -125,6 +125,6 @@ The gem is available as open source under the terms of the [MIT License](https:/
 
 Commercial support for lock-gemfile and related tools is available from Durable Programming, LLC. You can contact us at [durableprogramming.com](https://www.durableprogramming.com).
 
-![Durable Programming, LLC Logo](https://durableprogramming.com/wp-content/uploads/2022/04/Full-logo-2color-1024x392.png)
+![Durable Programming, LLC Logo](https://durableprogramming.com/images/logo.png)
 
 
