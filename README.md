@@ -1,5 +1,7 @@
 # Lock::Gemfile
 
+<img src="logo.svg" alt="logo">
+
 Lock::Gemfile is a Ruby library that provides functionality to update a Gemfile with locked versions - typically, from a corresponding Gemfile.lock file, but you can also provide arbitrary versions as well. 
 
 ## Installation
@@ -126,5 +128,4 @@ The gem is available as open source under the terms of the [MIT License](https:/
 Commercial support for lock-gemfile and related tools is available from Durable Programming, LLC. You can contact us at [durableprogramming.com](https://www.durableprogramming.com).
 
 ![Durable Programming, LLC Logo](https://durableprogramming.com/images/logo.png)
-
 
