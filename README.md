@@ -1,6 +1,6 @@
 # Lock::Gemfile
 
-![GitHub-Mark-Light](logo-darkmode.svg#gh-dark-mode-only)![GitHub-Mark-Dark](logo.svg#gh-light-mode-only)
+![GitHub-Mark-Light](logo-dark-mode.svg#gh-dark-mode-only)![GitHub-Mark-Dark](logo.svg#gh-light-mode-only)
 
 
 Lock::Gemfile is a Ruby library that provides functionality to update a Gemfile with locked versions - typically, from a corresponding Gemfile.lock file, but you can also provide arbitrary versions as well. 
