@@ -1,7 +1,7 @@
-require 'bundler'
-require 'net/http'
-require 'uri'
-require 'json'
+require "bundler"
+require "net/http"
+require "uri"
+require "json"
 
 module Lock
   module Gemfile
@@ -40,7 +40,7 @@ module Lock
           versions = remote_versions_for(dependency.name)
 
           versions.count do |version_data|
-            constraint.satisfied_by?(Gem::Version.new(version_data['number']))
+            constraint.satisfied_by?(Gem::Version.new(version_data["number"]))
           end
         end
       end
@@ -55,13 +55,12 @@ module Lock
         Gem::Specification.find_all_by_name(gem_name).map(&:version)
       end
 
-
       def local_gemfile_dependencies
         Bundler.definition.dependencies
       end
 
       def pct_of(a, b)
-        (((a.to_f / b.to_f) * 100)).round(2).to_s + '%'
+        (((a.to_f / b.to_f) * 100)).round(2).to_s + "%"
       end
     end
   end

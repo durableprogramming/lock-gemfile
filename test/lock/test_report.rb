@@ -1,6 +1,6 @@
-require 'minitest/autorun'
-require 'mocha/minitest'
-require 'lock/gemfile/report'
+require "minitest/autorun"
+require "mocha/minitest"
+require "lock/gemfile/report"
 
 module Lock
   module Gemfile
@@ -54,8 +54,8 @@ module Lock
         dep2.expects(:requirement).returns(Gem::Requirement.new(">= 2.0"))
 
         @report.expects(:local_gemfile_dependencies).returns([dep1, dep2])
-        @report.expects(:remote_versions_for).with("gem1").returns([{"number" => "1.1"}, {"number" => "1.2"}])
-        @report.expects(:remote_versions_for).with("gem2").returns([{"number" => "1.9"}, {"number" => "2.1"}])
+        @report.expects(:remote_versions_for).with("gem1").returns([{ "number" => "1.1" }, { "number" => "1.2" }])
+        @report.expects(:remote_versions_for).with("gem2").returns([{ "number" => "1.9" }, { "number" => "2.1" }])
 
         assert_equal 3, @report.send(:remotely_available_gemspec_count)
       end

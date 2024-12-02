@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
 
-require_relative '../lib/lock/gemfile/cli'
+require_relative "../lib/lock/gemfile/cli"
 
 Lock::Gemfile::CLI.run(ARGV)

@@ -1,6 +1,6 @@
-require 'optparse'
-require_relative 'rewriter'
-require_relative 'report'
+require "optparse"
+require_relative "rewriter"
+require_relative "report"
 
 module Lock
   module Gemfile
@@ -13,9 +13,9 @@ module Lock
         options = parse_options(args)
 
         case options[:command]
-        when 'report'
+        when "report"
           Report.generate
-        when 'rewrite'
+        when "rewrite"
           rewrite_gemfile(options)
         else
           puts "Unknown command: #{options[:command]}"
@@ -27,7 +27,7 @@ module Lock
 
       def parse_options(args)
         options = { pessimistic: true }
-        
+
         OptionParser.new do |opts|
           opts.banner = "Usage: lock [options] <command>"
 
@@ -47,8 +47,8 @@ module Lock
       end
 
       def rewrite_gemfile(options)
-        gemfile_path = 'Gemfile'
-        lockfile_path = 'Gemfile.lock'
+        gemfile_path = "Gemfile"
+        lockfile_path = "Gemfile.lock"
 
         unless File.exist?(gemfile_path) && File.exist?(lockfile_path)
           puts "Gemfile or Gemfile.lock not found in current directory"
@@ -78,9 +78,7 @@ module Lock
       def parse_lockfile(content)
         specs = content.split("DEPENDENCIES").first.split("\n")
         specs.each_with_object({}) do |line, hash|
-          if line =~ /^\s{4}(\S+) \((.*?)\)/
-            hash[$1] = $2
-          end
+          hash[::Regexp.last_match(1)] = ::Regexp.last_match(2) if line =~ /^\s{4}(\S+) \((.*?)\)/
         end
       end
     end
