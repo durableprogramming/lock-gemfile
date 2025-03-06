@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    lock-gemfile (0.1.4)
+    lock-gemfile (0.1.6)
       bundler (>= 1.0)
       parser (>= 3.0)
       thor (>= 1.0)

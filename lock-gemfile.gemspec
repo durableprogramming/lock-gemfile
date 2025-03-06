@@ -25,7 +25,7 @@ Gem::Specification.new do |spec|
     end
   end
 
-  spec.bindir = "bin"
+  spec.bindir = "exe"
   spec.executables = ["lock-gemfile"]
   spec.require_paths = ["lib"]
 
